@@ -1,0 +1,126 @@
+.info-panel {
+  width: 30vw;
+  position: fixed;
+  left: 100%;
+  top: 0;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+  transition: transform 0.2s ease;
+  will-change: transform;
+  border-radius: 4px 0 0 4px;
+  box-shadow: -16px 4px 25px 5px rgba(0, 0, 0, 0.432);
+  z-index: 1000;
+}
+
+.grip {
+  position: absolute;
+  top: 10%;
+  transform: translateY(-50%) scale(1) rotate(30deg);
+  transition: .2s ease;
+  left: -60px;
+  width: 80px;
+  height: 60px;
+  background-color: rgb(82, 54, 54);
+  cursor: grab;
+  clip-path: polygon(30% 50%, 0 0, 100% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 0 20px rgb(0, 0, 0));
+}
+
+.grip:active {
+  cursor: grabbing;
+}
+
+.grip:hover {
+  transform: translateY(-50%) scale(1.1) rotate(30deg);
+}
+
+.panel-inner {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  background: #ffffff;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 82%, rgba(158, 158, 133, 1) 100%);
+  overflow: auto;
+}
+
+.character-name {
+  font-family: "Great Vibes", cursive;
+  font-size: 4rem;
+  line-height: 40px;
+  color: black;
+  margin: 0 0 1rem 0;
+}
+
+.title-author {
+  padding: 24px 0;
+  font-size: 1.4rem;
+  color: #747F83;
+  margin: 0;
+}
+
+.adress-wrapper {
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.adress {
+  font-size: 1.4rem;
+  color: black;
+  margin: 0;
+}
+
+.adress span {
+  color: #747F83;
+}
+
+.additional-info {
+  font-size: 1.4rem;
+  color: black;
+  margin-top: 24px;
+}
+
+.detail-block {
+  margin-bottom: 20px;
+}
+
+.detail-title {
+  font-size: 1.6rem;
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.detail-content {
+  margin-bottom: 15px;
+}
+
+.detail-description {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+}
+
+.detail-divider {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.no-descriptions {
+  color: #999;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Скрываем на мобильных и планшетах */
+@media (max-width: 1024px) {
+  .info-panel {
+    display: none;
+  }
+}
