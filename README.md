@@ -141,13 +141,27 @@ cp client/.env.production.example client/.env.production
 3. Получите SSL сертификаты для HTTPS
 4. Настройте домен и DNS
 
-### Деплой
+### Деплой в продакшен
+
+#### Быстрый деплой
 ```bash
 # Сделайте скрипт исполняемым
-chmod +x deploy.sh
+chmod +x deploy-production.sh
 
 # Запустите деплой
-./deploy.sh
+./deploy-production.sh
+```
+
+#### Ручной деплой
+```bash
+# Создайте .env файлы из примеров
+cp .env.production.example .env.production
+cp server/.env.production.example server/.env.production  
+cp client/.env.production.example client/.env.production
+
+# Отредактируйте файлы под ваши настройки
+# Запустите контейнеры
+docker-compose -f docker-compose.production.yml up -d --build
 ```
 
 ### Безопасность
