@@ -30,19 +30,16 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.production
-    ports:
-      - "80:80"
-    environment:
-      - VITE_API_URL=http://your-server-ip:3001
     restart: unless-stopped
 
   nginx:
     image: nginx:alpine
     ports:
+      - "80:80"
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - client
       - server
