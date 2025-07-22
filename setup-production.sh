@@ -48,11 +48,15 @@ if [ -z "$DB_NAME" ]; then
     DB_NAME="literature_locations_prod"
 fi
 
+echo "Используется название БД: ${DB_NAME}"
+
 echo "Введите пользователя базы данных (по умолчанию: lit_user):"
 read -r DB_USER
 if [ -z "$DB_USER" ]; then
     DB_USER="lit_user"
 fi
+
+echo "Используется пользователь БД: ${DB_USER}"
 
 echo "Введите пароль базы данных:"
 read -s DB_PASSWORD

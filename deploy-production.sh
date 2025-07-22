@@ -82,15 +82,54 @@ sleep 30
 log "Проверяем статус контейнеров..."
 docker-compose -f docker-compose.production.yml ps
 
+# Проверяем что PostgreSQL запустился
+log "Проверяем PostgreSQL..."
+for i in {1..10}; do
+    if docker-compose -f docker-compose.production.yml exec -T postgres pg_isready > /dev/null 2>&1; then
+        log "✅ PostgreSQL готов к работе"
+        break
+    else
+        warning "Ждем запуска PostgreSQL... ($i/10)"
+        sleep 5
+    fi
+    
+    if [ $i -eq 10 ]; then
+        error "PostgreSQL не запустился за 50 секунд"
+    fi
+done
+
+# Проверяем что база данных инициализирована
+log "Проверяем инициализацию базы данных..."
+sleep 5
+
+# Проверяем существование таблиц
+TABLES_CHECK=$(docker-compose -f docker-compose.production.yml exec -T postgres psql -U ${POSTGRES_USER:-lit_user} -d ${POSTGRES_DB:-literature_locations_prod} -c "\dt" 2>/dev/null | grep -E "(literature_locations|location_descriptions)" | wc -l || echo "0")
+
+if [ "$TABLES_CHECK" -eq 2 ]; then
+    log "✅ База данных инициализирована корректно"
+else
+    warning "⚠️ Проблема с инициализацией базы данных. Найдено таблиц: $TABLES_CHECK из 2"
+    log "Логи PostgreSQL:"
+    docker-compose -f docker-compose.production.yml logs postgres --tail=10
+fi
+
 # Проверяем что сервисы отвечают
 log "Проверяем работу сервисов..."
 
 # Проверяем API
-if curl -f -s http://localhost:3001/api/locations > /dev/null 2>&1; then
-    log "✅ API сервер работает"
-else
-    warning "⚠️ API сервер не отвечает, проверьте логи"
-fi
+for i in {1..5}; do
+    if curl -f -s http://localhost:3001/api/locations > /dev/null 2>&1; then
+        log "✅ API сервер работает"
+        break
+    else
+        warning "Ждем запуска API сервера... ($i/5)"
+        sleep 10
+    fi
+    
+    if [ $i -eq 5 ]; then
+        warning "⚠️ API сервер не отвечает, проверьте логи"
+    fi
+done
 
 # Показываем логи последних 20 строк
 log "Последние логи сервера:"
