@@ -65,6 +65,9 @@ POSTGRES_USER=$DB_USER
 POSTGRES_PASSWORD=$DB_PASSWORD
 EOF
 
+echo "Создан .env.production:"
+cat .env.production
+
 log "Создан файл .env.production"
 
 # Создаем server/.env.production
@@ -104,6 +107,11 @@ PORT=3001
 # Дополнительные настройки для продакшена
 NODE_ENV=production
 EOF
+
+echo "Создан server/.env.production:"
+echo "DATABASE_URL=postgresql://$DB_USER:***@postgres:5432/$DB_NAME"
+echo "ADMIN_LOGIN=$ADMIN_LOGIN"
+echo "(пароли скрыты для безопасности)"
 
 log "Создан файл server/.env.production"
 
