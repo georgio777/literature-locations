@@ -54,6 +54,10 @@ fi
 # Копируем .env.production в .env для Docker Compose
 cp .env.production .env
 
+# Принудительно удаляем образ клиента для полной пересборки
+log "Удаляем образ клиента для принудительной пересборки..."
+docker rmi literature-locations-client 2>/dev/null || true
+
 # Пересобираем и запускаем контейнеры
 log "Пересобираем и запускаем контейнеры..."
 docker-compose -f docker-compose.production.yml up -d --build
