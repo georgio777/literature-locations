@@ -154,36 +154,36 @@ const InfoPanelVertical: React.FC = () => {
       <div className="info-panel__content">
         {currentCharacter && (
           <div className="character-info">
-            <p className="character-name">{currentCharacter.name}</p>
-            <p className="title-author">{currentCharacter.fiction}, {currentCharacter.author}</p>
+            <p className="character-name-vert">{currentCharacter.name}</p>
+            <p className="title-author-vert">{currentCharacter.fiction}, {currentCharacter.author}</p>
             <hr />
-            <div className="adress-wrapper">
-              <p className='adress'>
+            <div className="adress-wrapper-vert">
+              <p className='adress-vert'>
                 <span>Адрес:</span><br />
                 {currentCharacter.current_address}
               </p>
-              <p className='adress'>
+              <p className='adress-vert'>
                 <span>Исторический адрес:</span><br />
                 {currentCharacter.historical_address}
               </p>
             </div>
             
             {/* Секция описаний */}
-            <div className="additional-info">
+            <div className="additional-info-vert">
               {loadingDescriptions ? (
                 <p>Загрузка описаний...</p>
               ) : descriptions.length > 0 ? (
                 descriptions.map((desc, index) => (
-                  <div key={desc.id} className="detail-block">
-                    <h3 className="detail-title">{desc.title}</h3>
-                    <div className="detail-content">
-                      <p className="detail-description">{desc.description}</p>
+                  <div key={desc.id} className="detail-block-vert">
+                    <h3 className="detail-title-vert">{desc.title}</h3>
+                    <div className="detail-content-vert">
+                      <p className="detail-description-vert">{desc.description}</p>
                     </div>
-                    {index < descriptions.length - 1 && <hr className="detail-divider" />}
+                    {index < descriptions.length - 1 && <hr className="detail-divider-vert" />}
                   </div>
                 ))
               ) : (
-                <p className="no-descriptions">Описания отсутствуют</p>
+                <p className="no-descriptions-vert">Описания отсутствуют</p>
               )}
             </div>
           </div>

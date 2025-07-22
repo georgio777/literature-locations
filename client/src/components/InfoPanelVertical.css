@@ -58,21 +58,21 @@
   box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
 }
 
-.character-info {
+.character-info-vert {
   max-width: 600px;
   margin: 0 auto;
 }
 
-.character-name {
+.character-name-vert {
   font-family: "Great Vibes", cursive;
   font-size: 3rem;
   line-height: 1.2;
-  color: rgb(255, 0, 0);
+  color: rgb(0, 0, 0);
   margin: 0 0 1rem 0;
   text-align: center;
 }
 
-.title-author {
+.title-author-vert {
   padding: 16px 0;
   font-size: 1.2rem;
   color: #747F83;
@@ -80,60 +80,60 @@
   text-align: center;
 }
 
-.adress-wrapper {
+.adress-wrapper-vert {
   padding: 16px 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.adress {
+.adress-vert {
   font-size: 1.1rem;
   color: black;
   margin: 0;
   line-height: 1.4;
 }
 
-.adress span {
+.adress-vert span {
   color: #747F83;
   font-weight: 600;
 }
 
-.additional-info {
+.additional-info-vert {
   font-size: 1.1rem;
   color: black;
   margin-top: 16px;
 }
 
-.detail-block {
+.detail-block-vert {
   margin-bottom: 16px;
 }
 
-.detail-title {
+.detail-title-vert {
   font-size: 1.3rem;
   color: #2c3e50;
   margin: 0 0 8px 0;
   font-weight: 600;
 }
 
-.detail-content {
+.detail-content-vert {
   margin-bottom: 12px;
 }
 
-.detail-description {
+.detail-description-vert {
   font-size: 1.1rem;
   line-height: 1.5;
   color: #333;
   margin: 0;
 }
 
-.detail-divider {
+.detail-divider-vert {
   margin: 16px 0;
   border: none;
   border-top: 1px solid #ddd;
 }
 
-.no-descriptions {
+.no-descriptions-vert {
   color: #999;
   font-style: italic;
   margin: 0;
