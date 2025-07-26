@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import './InfoPanelVertical.css'
 import { useMapStore } from '../store/mapStore'
 import type { LocationDescription } from '../types'
+import Share from './Share'
 
 const API_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:3001'
 
@@ -217,6 +218,7 @@ const InfoPanelVertical: React.FC = () => {
             <p className="no-descriptions-vert">Выберите персонажа на карте</p>
           </div>
         )}
+        <Share/>
       </div>
     </div>
   )

@@ -172,14 +172,14 @@
   font-family: "Great Vibes", cursive;
   font-size: 3rem;
   line-height: 1.2;
-  color: rgb(0, 0, 0);
+  color: var(--dark-txt);
   text-align: center;
 }
 
 .title-author-vert {
   padding: 1rem 0;
   font-size: 1.4rem;
-  color: #747F83;
+  color: var(--grey-txt);
   margin: 0;
   text-align: center;
 }
@@ -193,19 +193,19 @@
 
 .adress-vert {
   font-size: 1.4rem;
-  color: black;
+  color: var(--dark-txt);
   margin: 0;
   line-height: 1.4;
 }
 
 .adress-vert span {
-  color: #747F83;
+  color: var(--grey-txt);
   font-weight: 600;
 }
 
 .additional-info-vert {
   font-size: 1.4rem;
-  color: black;
+  color: var(--dark-txt);
   margin-top: 16px;
   /* Добавляем нижний отступ для последнего блока */
   padding-bottom: 20px;
@@ -217,7 +217,7 @@
 
 .detail-title-vert {
   font-size: 1.6rem;
-  color: #2c3e50;
+  color: var(--dark-txt);
   margin: 0 0 8px 0;
   font-weight: 600;
 }
@@ -229,7 +229,7 @@
 .detail-description-vert {
   font-size: 1.4rem;
   line-height: 1.5;
-  color: #333;
+  color: var(--dark-txt);
   margin: 0;
 }
 

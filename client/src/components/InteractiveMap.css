@@ -4,20 +4,20 @@
 }
 
 .map-pin {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
-  transition: transform .2s ease;
+  transition: .1s ease;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .map-pin:hover {
   transform: scale(1.1);
+  box-shadow: 2px 2px 1px 1px rgba(0,0,0,0.3);
+
 }
 
 .map-pin:active {
@@ -27,7 +27,7 @@
 .pin-name {
   text-transform: uppercase;
   font-family: "Great Vibes", cursive;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 22px;
   margin-left: -6px;
   margin-bottom: -4px;

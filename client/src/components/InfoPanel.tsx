@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import './InfoPanel.css'
 import { useMapStore } from '../store/mapStore'
 import type { LocationDescription } from '../types'
+import Share from './Share'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -168,6 +169,8 @@ function InfoPanel() {
             </div>
           </div>
         )}
+        <Share/>
+
       </div>
     </div>
   )
