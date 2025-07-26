@@ -165,7 +165,7 @@
   max-width: 600px;
   margin: 0 auto;
   /* Добавляем нижний отступ для полной прокрутки */
-  padding-bottom: 40px;
+  padding-bottom: 70px;
 }
 
 .character-name-vert {

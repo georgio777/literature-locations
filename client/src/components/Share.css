@@ -3,9 +3,7 @@
   bottom: 0;
   left: 0;
   display: inline-block;
-  width: 100%;
   margin: 1rem;
-  max-width: 280px;
   z-index: 2000;
 }
 
@@ -37,11 +35,10 @@
 .share-dropdown {
   position: absolute;
   left: 0;
-  border: 1px solid var(--border-on-dark);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 4px 4px rgba(0, 0, 0, 0.445);
   width: 100%;
-  min-width: 200px;
+  min-width: 320px;
   z-index: 1000;
   animation: shareDropdownOpen 0.2s ease;
   /* Позиционирование (top/bottom) будет задаваться через JavaScript */
