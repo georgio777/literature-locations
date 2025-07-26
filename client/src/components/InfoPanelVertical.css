@@ -3,7 +3,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 100vh;
+  /* Высота теперь задается динамически через JavaScript */
   display: flex;
   flex-direction: column;
   will-change: transform;
@@ -14,8 +14,7 @@
   padding-top: env(safe-area-inset-top, 0px);
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
-  /* Ограничиваем максимальное смещение вниз */
-  max-height: calc(100vh + 90px);
+  /* Ограничиваем минимальную высоту */
   min-height: 90px;
 }
 
@@ -181,7 +180,7 @@
 
 .title-author-vert {
   padding: 1rem 0;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: #747F83;
   margin: 0;
   text-align: center;
@@ -195,7 +194,7 @@
 }
 
 .adress-vert {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   color: black;
   margin: 0;
   line-height: 1.4;
@@ -207,7 +206,7 @@
 }
 
 .additional-info-vert {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   color: black;
   margin-top: 16px;
 }
@@ -217,7 +216,7 @@
 }
 
 .detail-title-vert {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   color: #2c3e50;
   margin: 0 0 8px 0;
   font-weight: 600;
@@ -228,7 +227,7 @@
 }
 
 .detail-description-vert {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   line-height: 1.5;
   color: #333;
   margin: 0;
@@ -255,7 +254,7 @@
 }
 
 /* Адаптация для очень маленьких экранов */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .character-name {
     font-size: 2.5rem;
   }
@@ -283,4 +282,4 @@
   .info-panel__content {
     padding: 20px 12px;
   }
-}
+} */

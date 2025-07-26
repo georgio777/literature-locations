@@ -12,7 +12,7 @@ import type { Location } from '../types'
 
 // Геозона радиусом 7 миль вокруг центра СПб
 const CENTER_COORDS: [number, number] = [30.315965, 59.939009]
-const GEOFENCE = circle(CENTER_COORDS, 50, { units: 'miles' })
+const GEOFENCE = circle(CENTER_COORDS, 10, { units: 'miles' })
 
 const API_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:3001'
 

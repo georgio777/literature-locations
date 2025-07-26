@@ -161,14 +161,18 @@ const InfoPanelVertical: React.FC = () => {
     startDrag(e.clientY, offsetRef.current, e.pointerId)
   }, [startDrag])
 
-  // Вычисляем translateY
+  // Вычисляем translateY и высоту панели
   const translateY = windowHeight - currentY
+  const panelHeight = SNAP.open + 100 // добавляем запас для плавности
 
   return (
     <div
       ref={panelRef}
       className="info-panel-vertical"
-      style={{ transform: `translateY(${translateY}px)` }}
+      style={{ 
+        transform: `translateY(${translateY}px)`,
+        height: `${panelHeight}px`
+      }}
     >
       <div 
         className="info-panel__handle-area"
