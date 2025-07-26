@@ -3,11 +3,11 @@ import './InfoPanelVertical.css'
 import { useMapStore } from '../store/mapStore'
 import type { LocationDescription } from '../types'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:3001'
 
-const HANDLE_HEIGHT = 40      // px
-const HANDLE_MARGIN = 0       // px
-const CLOSED_OFFSET = HANDLE_HEIGHT + HANDLE_MARGIN * 2
+const HANDLE_AREA_HEIGHT = 70 // px - полная высота области касания
+const SAFE_MARGIN = 20        // px - дополнительный отступ для удобства
+const CLOSED_OFFSET = HANDLE_AREA_HEIGHT + SAFE_MARGIN
 
 type SnapPoints = {
   closed: number
@@ -55,11 +55,16 @@ const InfoPanelVertical: React.FC = () => {
   }, [])
 
   // Определяем snap‑точки в пикселях
-  const SNAP: SnapPoints = useMemo(() => ({
-    closed: CLOSED_OFFSET,
-    half: windowHeight / 2,
-    open: windowHeight,
-  }), [windowHeight])
+  const SNAP: SnapPoints = useMemo(() => {
+    // Убеждаемся, что закрытое состояние не слишком низко
+    const minClosedOffset = Math.max(CLOSED_OFFSET, 90) // минимум 90px от низа
+    
+    return {
+      closed: minClosedOffset,
+      half: windowHeight / 2,
+      open: windowHeight,
+    }
+  }, [windowHeight])
 
   // При монтировании выставляем закрытую позицию
   useEffect(() => {
@@ -94,17 +99,27 @@ const InfoPanelVertical: React.FC = () => {
     if (panelRef.current) panelRef.current.style.transition = 'none'
 
     const onMove = (e: PointerEvent) => {
+      e.preventDefault()
+      
       const delta = startMouseY - e.clientY
       const raw = startOffset + delta
-      const clamped = Math.min(Math.max(raw, SNAP.closed), SNAP.open)
+      // Дополнительная защита: ручка не должна уходить ниже 90px от низа экрана
+      const minPosition = Math.max(SNAP.closed, 90)
+      const clamped = Math.min(Math.max(raw, minPosition), SNAP.open)
       
-      offsetRef.current = clamped
-      setCurrentY(clamped)
+      // Используем requestAnimationFrame для плавности
+      requestAnimationFrame(() => {
+        offsetRef.current = clamped
+        setCurrentY(clamped)
+      })
     }
 
-    const onUp = () => {
+    const onUp = (e: PointerEvent) => {
+      e.preventDefault()
+      
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
       
       // отпустить захват указателя
       panelRef.current?.releasePointerCapture(pointerId)
@@ -127,14 +142,20 @@ const InfoPanelVertical: React.FC = () => {
       panelRef.current?.addEventListener('transitionend', cleanup)
     }
 
-    window.addEventListener('pointermove', onMove)
-    window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointermove', onMove, { passive: false })
+    window.addEventListener('pointerup', onUp, { passive: false })
+    window.addEventListener('pointercancel', onUp, { passive: false })
   }, [SNAP, getClosestPoint])
 
   // Обработчик нажатия на ручку
   const onHandlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    // Предотвращаем стандартное поведение браузера
+    e.preventDefault()
+    e.stopPropagation()
+    
     // перехватываем указатель, чтобы получать его события
     e.currentTarget.setPointerCapture(e.pointerId)
+    
     startDrag(e.clientY, offsetRef.current, e.pointerId)
   }, [startDrag])
 
@@ -147,10 +168,19 @@ const InfoPanelVertical: React.FC = () => {
       className="info-panel-vertical"
       style={{ transform: `translateY(${translateY}px)` }}
     >
-      <div
-        className="info-panel__handle"
+      <div 
+        className="info-panel__handle-area"
         onPointerDown={onHandlePointerDown}
-      />
+      >
+        <div
+          className="info-panel__handle"
+          role="slider"
+          aria-label="Перетащите для изменения размера панели"
+          tabIndex={0}
+        >
+          <div className="info-panel__handle-indicator" />
+        </div>
+      </div>
       <div className="info-panel__content">
         {currentCharacter && (
           <div className="character-info">

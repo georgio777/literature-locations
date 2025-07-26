@@ -12,9 +12,9 @@ import type { Location } from '../types'
 
 // Геозона радиусом 7 миль вокруг центра СПб
 const CENTER_COORDS: [number, number] = [30.315965, 59.939009]
-const GEOFENCE = circle(CENTER_COORDS, 7, { units: 'miles' })
+const GEOFENCE = circle(CENTER_COORDS, 50, { units: 'miles' })
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:3001'
 
 interface ViewState {
   longitude: number
@@ -39,7 +39,7 @@ export default function InteractiveMap() {
         const response = await fetch(`${API_URL}/api/locations`)
         if (response.ok) {
           const locations: Location[] = await response.json()
-          setData(locations)
+          setData(locations)          
         }
       } catch (error) {
         console.error('Error fetching locations:', error)
@@ -58,13 +58,7 @@ export default function InteractiveMap() {
       if (character) {
         setCurrentCharacter(character)
         setCurrentId(id)
-        // Центрируем карту на выбранном персонаже
-        setViewState(prev => ({
-          ...prev,
-          longitude: Number(character.longitude),
-          latitude: Number(character.latitude),
-          zoom: 15
-        }))
+        // Убрали центрирование карты при клике на pin
       }
     }
   }, [searchParams, data, setCurrentCharacter, setCurrentId])
@@ -72,7 +66,7 @@ export default function InteractiveMap() {
   // Генерируем маркеры
   const pins = useMemo(() => {
     if (!data) return null
-
+    
     return data.map((character) => (
       <Marker
         key={character.id}

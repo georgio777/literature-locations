@@ -1,7 +1,7 @@
 .info-panel-vertical {
   position: fixed;
-  bottom: 0; 
-  left: 0; 
+  bottom: 0;
+  left: 0;
   right: 0;
   height: 100vh;
   display: flex;
@@ -10,16 +10,58 @@
   user-select: none;
   transition: transform 0.3s ease;
   z-index: 1000;
+  /* Учитываем безопасные области для устройств с вырезами */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  /* Ограничиваем максимальное смещение вниз */
+  max-height: calc(100vh + 90px);
+  min-height: 90px;
+}
+
+.info-panel__handle-area {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Увеличиваем область касания */
+  min-height: 70px;
+  cursor: grab;
+  touch-action: none;
+  margin-bottom: -8px;
+  /* Дополнительный отступ сверху для избежания вырезов */
+  margin-top: max(env(safe-area-inset-top, 0px), 20px);
+}
+
+.info-panel__handle-area:active {
+  cursor: grabbing;
+}
+
+.info-panel__handle-area:active .info-panel__handle {
+  background: #e8e8e8;
+}
+
+.info-panel__handle-area:active .info-panel__handle::before {
+  box-shadow: 20px 0px 0px 0px #e8e8e8;
+}
+
+.info-panel__handle-area:active .info-panel__handle::after {
+  box-shadow: -20px 0px 0px 0px #e8e8e8;
 }
 
 .info-panel__handle {
-  width: 60%;
-  height: 40px;
+  width: 85%;
+  height: 50px;
   align-self: center;
   background: #f7f7f7;
   border-radius: 20px 20px 0 0;
   cursor: grab;
   position: relative;
+  touch-action: none;
+  /* Увеличиваем область касания с помощью padding */
+  padding: 10px 0;
+  margin: -10px 0;
 }
 
 .info-panel__handle::before {
@@ -28,7 +70,7 @@
   width: 40px;
   height: 50%;
   left: -40px;
-  box-shadow: 20px 0px 0px 0px #f7f7f7; 
+  box-shadow: 20px 0px 0px 0px #f7f7f7;
   top: 50%;
   border-bottom-right-radius: 40px;
 }
@@ -39,13 +81,73 @@
   width: 40px;
   height: 50%;
   right: -40px;
-  box-shadow: -20px 0px 0px 0px #f7f7f7; 
+  box-shadow: -20px 0px 0px 0px #f7f7f7;
   top: 50%;
   border-bottom-left-radius: 40px;
 }
 
 .info-panel__handle:active {
   cursor: grabbing;
+  background: #e8e8e8;
+}
+
+.info-panel__handle:active::before {
+  box-shadow: 20px 0px 0px 0px #e8e8e8;
+}
+
+.info-panel__handle:active::after {
+  box-shadow: -20px 0px 0px 0px #e8e8e8;
+}
+
+/* Добавляем визуальный индикатор для ручки поверх существующего ::after */
+.info-panel__handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-panel__handle-indicator {
+  width: 40px;
+  height: 4px;
+  background: #ccc;
+  border-radius: 2px;
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Улучшаем отзывчивость на touch устройствах */
+@media (hover: none) and (pointer: coarse) {
+  .info-panel__handle {
+    /* Увеличиваем область касания на touch устройствах */
+    min-height: 60px;
+    padding: 15px 0;
+    margin: -15px 0;
+  }
+
+  .info-panel__handle:active {
+    background: #ddd;
+  }
+
+  .info-panel__handle:active::before {
+    box-shadow: 20px 0px 0px 0px #ddd;
+  }
+
+  .info-panel__handle:active::after {
+    box-shadow: -20px 0px 0px 0px #ddd;
+  }
+
+  .info-panel__handle-area:active .info-panel__handle {
+    background: #ddd;
+  }
+
+  .info-panel__handle-area:active .info-panel__handle::before {
+    box-shadow: 20px 0px 0px 0px #ddd;
+  }
+
+  .info-panel__handle-area:active .info-panel__handle::after {
+    box-shadow: -20px 0px 0px 0px #ddd;
+  }
 }
 
 .info-panel__content {
@@ -55,7 +157,13 @@
   flex: 1;
   padding: 40px 16px;
   overflow-y: auto;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #f7f7f7;
+}
+
+.info-panel__handle-area:active + .info-panel__content {
+  border-top: 3px solid #ddd;
+  /* border-color: #e8e8e8; */
 }
 
 .character-info-vert {
@@ -68,12 +176,11 @@
   font-size: 3rem;
   line-height: 1.2;
   color: rgb(0, 0, 0);
-  margin: 0 0 1rem 0;
   text-align: center;
 }
 
 .title-author-vert {
-  padding: 16px 0;
+  padding: 1rem 0;
   font-size: 1.2rem;
   color: #747F83;
   margin: 0;
@@ -81,7 +188,7 @@
 }
 
 .adress-wrapper-vert {
-  padding: 16px 0;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -152,27 +259,27 @@
   .character-name {
     font-size: 2.5rem;
   }
-  
+
   .title-author {
     font-size: 1rem;
   }
-  
+
   .adress {
     font-size: 1rem;
   }
-  
+
   .additional-info {
     font-size: 1rem;
   }
-  
+
   .detail-title {
     font-size: 1.2rem;
   }
-  
+
   .detail-description {
     font-size: 1rem;
   }
-  
+
   .info-panel__content {
     padding: 20px 12px;
   }

@@ -247,18 +247,6 @@ export default function EditLocation() {
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="longitude">Долгота:</label>
-            <input
-              type="number"
-              step="any"
-              id="longitude"
-              name="longitude"
-              value={formData.longitude}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="latitude">Широта:</label>
             <input
               type="number"
@@ -266,6 +254,18 @@ export default function EditLocation() {
               id="latitude"
               name="latitude"
               value={formData.latitude}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="longitude">Долгота:</label>
+            <input
+              type="number"
+              step="any"
+              id="longitude"
+              name="longitude"
+              value={formData.longitude}
               onChange={handleChange}
               required
             />

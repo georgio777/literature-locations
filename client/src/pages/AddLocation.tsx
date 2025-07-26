@@ -157,18 +157,7 @@ function AddLocation() {
         </div>
 
         <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="longitude">Долгота:</label>
-            <input
-              type="number"
-              step="any"
-              id="longitude"
-              name="longitude"
-              value={formData.longitude}
-              onChange={handleChange}
-              required
-            />
-          </div>
+
           <div className="form-group">
             <label htmlFor="latitude">Широта:</label>
             <input
@@ -177,6 +166,18 @@ function AddLocation() {
               id="latitude"
               name="latitude"
               value={formData.latitude}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="longitude">Долгота:</label>
+            <input
+              type="number"
+              step="any"
+              id="longitude"
+              name="longitude"
+              value={formData.longitude}
               onChange={handleChange}
               required
             />
