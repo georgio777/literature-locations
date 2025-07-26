@@ -84,7 +84,7 @@ export default function InteractiveMap() {
       >
         <div
           style={{
-            backgroundColor: currentId === character.id ? 'rgba(236, 243, 233, 1)' : 'rgba(29, 40, 28, 1)'
+            backgroundColor: currentId === character.id ? 'rgba(247, 246, 243, 1)' : 'rgba(29, 40, 28, 1)'
           }}
           title={character.name}
           className="map-pin"

@@ -1,8 +1,12 @@
 .share-component {
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   display: inline-block;
   width: 100%;
-  margin: 1rem 0;
+  margin: 1rem;
+  max-width: 280px;
+  z-index: 2000;
 }
 
 .share-button {

@@ -2,6 +2,7 @@ import InteractiveMap from '../components/InteractiveMap'
 import InfoPanel from '../components/InfoPanel'
 import InfoPanelVertical from '../components/InfoPanelVertical'
 import './MapPage.css'
+import Share from '../components/Share'
 
 export default function MapPage() {
   return (
@@ -9,6 +10,7 @@ export default function MapPage() {
       <InteractiveMap />
       <InfoPanel />
       <InfoPanelVertical />
+      <Share />
     </div>
   )
 }
