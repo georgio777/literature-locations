@@ -58,11 +58,13 @@ const InfoPanelVertical: React.FC = () => {
   const SNAP: SnapPoints = useMemo(() => {
     // Убеждаемся, что закрытое состояние не слишком низко
     const minClosedOffset = Math.max(CLOSED_OFFSET, 90) // минимум 90px от низа
+    // Ограничиваем открытое состояние до 80% от высоты экрана
+    const maxOpenOffset = windowHeight * 0.8
     
     return {
       closed: minClosedOffset,
       half: windowHeight / 2,
-      open: windowHeight,
+      open: maxOpenOffset,
     }
   }, [windowHeight])
 
