@@ -5,14 +5,12 @@ import type { LocationDescription } from '../types'
 
 const API_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:3001'
 
-const HANDLE_AREA_HEIGHT = 70 // px - полная высота области касания
-const SAFE_MARGIN = 20        // px - дополнительный отступ для удобства
-const CLOSED_OFFSET = HANDLE_AREA_HEIGHT + SAFE_MARGIN
-
-type SnapPoints = {
-  closed: number
-  half: number
-  open: number
+// Упрощенные константы для позиций панели (в процентах от высоты экрана)
+const PANEL_HEIGHT_PERCENT = 0.8 // 80% экрана
+const POSITIONS = {
+  CLOSED: 100,    // 100% translateY - полностью скрыта
+  HALF: 60,       // 60% translateY - показывается 40% панели  
+  OPEN: 20        // 20% translateY - показывается 80% панели
 }
 
 const InfoPanelVertical: React.FC = () => {
@@ -22,8 +20,8 @@ const InfoPanelVertical: React.FC = () => {
   
   const panelRef = useRef<HTMLDivElement>(null)
   const [windowHeight, setWindowHeight] = useState(() => window.innerHeight)
-  const [currentY, setCurrentY] = useState<number>(CLOSED_OFFSET)
-  const offsetRef = useRef<number>(CLOSED_OFFSET)
+  const [currentPosition, setCurrentPosition] = useState<number>(POSITIONS.CLOSED)
+  const positionRef = useRef<number>(POSITIONS.CLOSED)
 
   // Загружаем описания при смене персонажа
   useEffect(() => {
@@ -54,25 +52,14 @@ const InfoPanelVertical: React.FC = () => {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  // Определяем snap‑точки в пикселях
-  const SNAP: SnapPoints = useMemo(() => {
-    // Убеждаемся, что закрытое состояние не слишком низко
-    const minClosedOffset = Math.max(CLOSED_OFFSET, 90) // минимум 90px от низа
-    // Ограничиваем открытое состояние до 80% от высоты экрана
-    const maxOpenOffset = windowHeight * 0.8
-    
-    return {
-      closed: minClosedOffset,
-      half: windowHeight / 2,
-      open: maxOpenOffset,
-    }
-  }, [windowHeight])
+  // Упрощенная логика - работаем с процентами
+  const snapPoints = [POSITIONS.CLOSED, POSITIONS.HALF, POSITIONS.OPEN]
 
   // При монтировании выставляем закрытую позицию
   useEffect(() => {
-    setCurrentY(SNAP.closed)
-    offsetRef.current = SNAP.closed
-  }, [SNAP.closed])
+    setCurrentPosition(POSITIONS.CLOSED)
+    positionRef.current = POSITIONS.CLOSED
+  }, [])
 
   useEffect(() => {
     if (currentCharacter == null) return
@@ -82,37 +69,39 @@ const InfoPanelVertical: React.FC = () => {
       panelRef.current.style.transition = 'transform 0.3s ease'
     }
     
-    // смещаемся в snap-полную позицию
-    setCurrentY(SNAP.open)
-    offsetRef.current = SNAP.open
-  }, [currentCharacter, SNAP.open])
+    // открываем панель
+    setCurrentPosition(POSITIONS.OPEN)
+    positionRef.current = POSITIONS.OPEN
+  }, [currentCharacter])
 
   // Вычисляем ближайшую точку притяжения
-  const getClosestPoint = useCallback((offset: number) => {
-    return [SNAP.closed, SNAP.half, SNAP.open].reduce((best, pt) =>
-      Math.abs(offset - pt) < Math.abs(offset - best) ? pt : best,
-      SNAP.closed
+  const getClosestPoint = useCallback((position: number) => {
+    return snapPoints.reduce((best, pt) =>
+      Math.abs(position - pt) < Math.abs(position - best) ? pt : best,
+      POSITIONS.CLOSED
     )
-  }, [SNAP])
+  }, [])
 
   // Начало перетаскивания
-  const startDrag = useCallback((startMouseY: number, startOffset: number, pointerId: number) => {
+  const startDrag = useCallback((startMouseY: number, startPosition: number, pointerId: number) => {
     // отключаем CSS-переход для ручного движения
     if (panelRef.current) panelRef.current.style.transition = 'none'
 
     const onMove = (e: PointerEvent) => {
       e.preventDefault()
       
-      const delta = startMouseY - e.clientY
-      const raw = startOffset + delta
-      // Дополнительная защита: ручка не должна уходить ниже 90px от низа экрана
-      const minPosition = Math.max(SNAP.closed, 90)
-      const clamped = Math.min(Math.max(raw, minPosition), SNAP.open)
+      // Вычисляем изменение позиции в процентах
+      const deltaY = startMouseY - e.clientY
+      const deltaPercent = (deltaY / windowHeight) * 100
+      const newPosition = startPosition - deltaPercent // инвертируем, так как тянем вверх
+      
+      // Ограничиваем позицию
+      const clampedPosition = Math.min(Math.max(newPosition, POSITIONS.OPEN), POSITIONS.CLOSED)
       
       // Используем requestAnimationFrame для плавности
       requestAnimationFrame(() => {
-        offsetRef.current = clamped
-        setCurrentY(clamped)
+        positionRef.current = clampedPosition
+        setCurrentPosition(clampedPosition)
       })
     }
 
@@ -127,12 +116,12 @@ const InfoPanelVertical: React.FC = () => {
       panelRef.current?.releasePointerCapture(pointerId)
       
       // «притягиваем» к ближайшей точке
-      const snapTo = getClosestPoint(offsetRef.current)
+      const snapTo = getClosestPoint(positionRef.current)
       if (panelRef.current)
         panelRef.current.style.transition = 'transform 0.3s ease'
       
-      setCurrentY(snapTo)
-      offsetRef.current = snapTo
+      setCurrentPosition(snapTo)
+      positionRef.current = snapTo
       
       // по окончании transition убираем inline-стиль
       const cleanup = () => {
@@ -147,7 +136,7 @@ const InfoPanelVertical: React.FC = () => {
     window.addEventListener('pointermove', onMove, { passive: false })
     window.addEventListener('pointerup', onUp, { passive: false })
     window.addEventListener('pointercancel', onUp, { passive: false })
-  }, [SNAP, getClosestPoint])
+  }, [windowHeight, getClosestPoint])
 
   // Обработчик нажатия на ручку
   const onHandlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
@@ -158,19 +147,19 @@ const InfoPanelVertical: React.FC = () => {
     // перехватываем указатель, чтобы получать его события
     e.currentTarget.setPointerCapture(e.pointerId)
     
-    startDrag(e.clientY, offsetRef.current, e.pointerId)
+    startDrag(e.clientY, positionRef.current, e.pointerId)
   }, [startDrag])
 
-  // Вычисляем translateY и высоту панели
-  const translateY = windowHeight - currentY
-  const panelHeight = SNAP.open + 100 // добавляем запас для плавности
+  // Упрощенные вычисления
+  const panelHeight = windowHeight * PANEL_HEIGHT_PERCENT
+  const translateY = `${currentPosition}%`
 
   return (
     <div
       ref={panelRef}
       className="info-panel-vertical"
       style={{ 
-        transform: `translateY(${translateY}px)`,
+        transform: `translateY(${translateY})`,
         height: `${panelHeight}px`
       }}
     >
@@ -188,8 +177,8 @@ const InfoPanelVertical: React.FC = () => {
         </div>
       </div>
       <div className="info-panel__content">
-        {currentCharacter && (
-          <div className="character-info">
+        {currentCharacter ? (
+          <div className="character-info-vert">
             <p className="character-name-vert">{currentCharacter.name}</p>
             <p className="title-author-vert">{currentCharacter.fiction}, {currentCharacter.author}</p>
             <hr />
@@ -222,6 +211,10 @@ const InfoPanelVertical: React.FC = () => {
                 <p className="no-descriptions-vert">Описания отсутствуют</p>
               )}
             </div>
+          </div>
+        ) : (
+          <div className="character-info-vert">
+            <p className="no-descriptions-vert">Выберите персонажа на карте</p>
           </div>
         )}
       </div>
