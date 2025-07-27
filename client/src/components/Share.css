@@ -41,7 +41,8 @@
   min-width: 320px;
   z-index: 1000;
   animation: shareDropdownOpen 0.2s ease;
-  /* Позиционирование (top/bottom) будет задаваться через JavaScript */
+  bottom: calc(100% + 1rem);
+  left: 0;
   background: var(--interactive-color);
 }
 

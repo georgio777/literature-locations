@@ -18,3 +18,56 @@ body {
 #root {
   min-height: 100vh;
 }
+
+button, 
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  border-radius: 0;
+  text-align: inherit;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Убираем фокус-стили (замените на свои) */
+button:focus, 
+input[type="button"]:focus, 
+input[type="submit"]:focus, 
+input[type="reset"]:focus {
+  outline: none;
+}
+
+/* Для ссылок, стилизованных под кнопки */
+a[role="button"] {
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Полный сброс для ненумерованных и нумерованных списков */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Для описательных списков (dl) - по желанию */
+dl {
+  margin: 0;
+  padding: 0;
+}
+
+dt, dd {
+  margin: 0;
+  padding: 0;
+}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './Share.css'
+import useClickOutside from '../hooks/useClickOutside'
 
 interface ShareProps {
   title?: string
@@ -15,45 +16,9 @@ const Share: React.FC<ShareProps> = ({
   const componentRef = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Позиционирование dropdown (вверх или вниз)
-  useEffect(() => {
-    if (!isOpen || !componentRef.current || !dropdownRef.current) return;
-
-    const componentRect = componentRef.current.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - componentRect.bottom;
-    const spaceAbove = componentRect.top;
-    
-    // Если места снизу мало, открываем вверх
-    if (spaceBelow < 300 && spaceAbove > spaceBelow) {
-      dropdownRef.current.style.bottom = '100%';
-      dropdownRef.current.style.top = 'auto';
-      dropdownRef.current.style.marginBottom = '8px';
-      dropdownRef.current.style.marginTop = '0';
-    } else {
-      // Открываем вниз (по умолчанию)
-      dropdownRef.current.style.top = '100%';
-      dropdownRef.current.style.bottom = 'auto';
-      dropdownRef.current.style.marginTop = '8px';
-      dropdownRef.current.style.marginBottom = '0';
-    }
-  }, [isOpen])
-
-  // Закрытие dropdown при клике вне компонента
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen])
+  useClickOutside(componentRef, () => {
+    setIsOpen(false)
+  });
 
   // Получаем текущий URL
   const currentUrl = window.location.href
@@ -63,7 +28,7 @@ const Share: React.FC<ShareProps> = ({
 
   // Ссылки для различных платформ
   const shareLinks = {
-    telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+    telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle + ', ' + encodedDescription}`,
     whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
     vk: `https://vk.com/share.php?url=${encodedUrl}&title=${encodedTitle}&description=${encodedDescription}`,
     email: `mailto:?subject=${encodedTitle}&body=${encodedDescription}%0A%0A${encodedUrl}`

@@ -3,6 +3,7 @@ import InfoPanel from '../components/InfoPanel'
 import InfoPanelVertical from '../components/InfoPanelVertical'
 import './MapPage.css'
 import Share from '../components/Share'
+import Filter from '../components/Filter'
 
 export default function MapPage() {
   return (
@@ -11,6 +12,7 @@ export default function MapPage() {
       <InfoPanel />
       <InfoPanelVertical />
       <Share />
+      <Filter />
     </div>
   )
 }
