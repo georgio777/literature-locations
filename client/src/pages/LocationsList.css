@@ -17,7 +17,7 @@
 .loading {
   text-align: center;
   padding: 3rem;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: #666;
 }
 
@@ -34,7 +34,7 @@
   text-align: center;
   padding: 3rem;
   color: #666;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
 }
 
 .locations-grid {
@@ -67,7 +67,7 @@
 
 .location-header h3 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 
 .location-actions {
@@ -82,7 +82,7 @@
   text-decoration: none;
   padding: 0.5rem;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 1.6rem;
   transition: all 0.2s;
   display: flex;
   align-items: center;
@@ -100,7 +100,7 @@
   background: #e74c3c;
   border: none;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 4px;
@@ -134,14 +134,14 @@
 
 .info-group strong {
   color: #2c3e50;
-  font-size: 0.9rem;
+  font-size: 1.6rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .info-group span {
   color: #555;
-  font-size: 1rem;
+  font-size: 1.6rem;
 }
 
 @media (max-width: 768px) {

@@ -34,7 +34,7 @@
 
 .admin-user-info span {
   color: #666;
-  font-size: 1rem;
+  font-size: 1.6rem;
 }
 
 .logout-btn {
@@ -44,7 +44,7 @@
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.6rem;
   transition: background-color 0.3s;
 }
 
@@ -81,13 +81,14 @@
 .admin-card h3 {
   margin: 0 0 1rem 0;
   color: #2c3e50;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
 }
 
 .admin-card p {
   margin: 0 0 1.5rem 0;
   color: #666;
   line-height: 1.5;
+  font-size: 1.6rem;
 }
 
 .admin-btn {
@@ -98,6 +99,7 @@
   font-weight: 500;
   transition: all 0.3s;
   cursor: pointer;
+  font-size: 1.6rem;
 }
 
 .admin-btn.primary {
