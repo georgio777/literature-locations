@@ -6,8 +6,8 @@
   --interactive-hover: #634444;
   --interactive-active: #4b3131; */
   --light-txt: white;
-  --dark-txt: rgb(10, 17, 55);
-  --grey-txt: rgb(101, 119, 136);
+  --dark-txt: rgb(6, 9, 28);
+  --grey-txt: rgb(105, 105, 105);
   --border-on-dark: rgb(157, 186, 159);
   --border-on-light: black;
 }

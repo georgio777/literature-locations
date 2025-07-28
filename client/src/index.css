@@ -71,3 +71,8 @@ dt, dd {
   margin: 0;
   padding: 0;
 }
+
+.maplibregl-ctrl-geolocate {
+  height: 30.4px !important;
+  width: 30.4px !important;
+}
