@@ -1,17 +1,19 @@
 import * as React from 'react';
 import Map, { GeolocateControl, NavigationControl } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import type { MapSourceDataEvent } from 'maplibre-gl';
 // @ts-ignore
 import circle from '@turf/circle';
 // @ts-ignore
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { point } from '@turf/helpers';
 import './InteractiveMap.css';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useMapStore } from '../store/mapStore';
 import { useSearchParams } from 'react-router-dom';
 import { MAPTILER_KEY } from '../config';
 import Pins from './Pins';
+import { usePreloadStore } from '../store/preloadStore';
 
 // Геозона радиусом 10 миль вокруг центра СПб
 const CENTER_COORDS: [number, number] = [30.315965, 59.939009];
@@ -29,12 +31,22 @@ interface ViewState {
 export default function InteractiveMap() {
   const [searchParams] = useSearchParams();
   const { data, setCurrentCharacter, setCurrentId, setData } = useMapStore();
+  const { setTilesLoaded } = usePreloadStore()
   
   const [viewState, setViewState] = React.useState<ViewState>({
     longitude: CENTER_COORDS[0],
     latitude: CENTER_COORDS[1],
     zoom: 12
   });
+
+  const hasLoadedRef = useRef(false);
+
+  const onMapLoad = (e: MapSourceDataEvent) => {
+    if (!hasLoadedRef.current && e.isSourceLoaded && e.tile) {
+      hasLoadedRef.current = true;
+      setTilesLoaded();
+    }
+  };
 
   // Загружаем данные локаций при монтировании компонента
   useEffect(() => {
@@ -102,6 +114,7 @@ export default function InteractiveMap() {
   return (
     <div className="map-container">
       <Map
+        onSourceData={onMapLoad}
         attributionControl={false}
         initialViewState={{
           longitude: CENTER_COORDS[0],
