@@ -1,12 +1,11 @@
 import './Filter.css'
 import { useMapStore } from '../store/mapStore'
 import { useEffect, useRef, useState } from 'react'
-import { Location } from '../types'
 import useClickOutside from '../hooks/useClickOutside'
 import useFilter from '../hooks/useFilter'
 
 export default function Filter() {
-  const { data, setFilteredData, clearFiltered } = useMapStore()
+  const { data, clearFiltered } = useMapStore()
   const [ authorsVisibility, setAuthorsVisibility] = useState(false)
   const [ fictionVisibility, setFictionVisibility] = useState(false)
   const [ uniqueAuthors, setUniqueAuthors] = useState< string[] | null>(null)
