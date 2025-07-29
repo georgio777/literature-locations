@@ -72,7 +72,14 @@ dt, dd {
   padding: 0;
 }
 
-.maplibregl-ctrl-geolocate {
+/* .maplibregl-ctrl-geolocate {
   height: 30.4px !important;
   width: 30.4px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
+
+.maplibregl-ctrl-icon {
+  background-position: center !important;
+} */

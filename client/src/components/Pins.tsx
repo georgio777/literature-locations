@@ -13,7 +13,7 @@ export default function Pins() {
       return filteredData;
     }
     
-    // Если filteredData не определен или пуст - используем data
+    // Если filteredData пуст - используем data
     return data || [];
   }, [data, filteredData]);
 
@@ -34,14 +34,14 @@ export default function Pins() {
         >
           <div
             style={{
-              backgroundColor: currentId === character.id ? 'rgba(247, 246, 243, 1)' : 'rgba(29, 40, 28, 1)'
+              backgroundColor: currentId === character.id ? 'rgba(247, 246, 243, 1)' : '#012030'
             }}
             title={character.name}
             className="map-pin"
           >
             <span
               style={{
-                color: currentId === character.id ? 'rgba(36, 49, 35, 1)' : 'rgba(236, 243, 233, 1)'
+                color: currentId === character.id ? '#012030' : 'rgba(236, 243, 233, 1)'
               }}
               className="pin-name"
             >

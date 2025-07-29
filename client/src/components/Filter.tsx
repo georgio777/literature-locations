@@ -3,6 +3,7 @@ import { useMapStore } from '../store/mapStore'
 import { useEffect, useRef, useState } from 'react'
 import { Location } from '../types'
 import useClickOutside from '../hooks/useClickOutside'
+import useFilter from '../hooks/useFilter'
 
 export default function Filter() {
   const { data, setFilteredData, clearFiltered } = useMapStore()
@@ -11,6 +12,7 @@ export default function Filter() {
   const [ uniqueAuthors, setUniqueAuthors] = useState< string[] | null>(null)
   const [ uniqueFictions, setUniqueFictions] = useState< string[] | null>(null)
   const filterElRef = useRef<HTMLDivElement>(null)
+  const filter = useFilter()
 
   useClickOutside(filterElRef, () => {
     setAuthorsVisibility(false)
@@ -42,18 +44,6 @@ export default function Filter() {
     setUniqueFictions(uniqFictions)
   }, [data])
 
-  const filterData = ( key: keyof Location, value: string ) => {
-    const filtered: Location[] = []
-
-    data?.map((location: Location) => {
-      if (location[key] === value) {
-        filtered.push(location)
-      }
-    })
-    
-    setFilteredData(filtered)
-  }
-
   return (
     <div 
     ref={filterElRef}
@@ -71,7 +61,7 @@ export default function Filter() {
             key={author}
             className="single-filter-element">
               <button
-              onClick={() => filterData( 'author', author )}
+              onClick={() => filter( 'author', author )}
               className="single-filterr-button">{ author }</button>
             </li>
           ))}
@@ -90,7 +80,7 @@ export default function Filter() {
             key={fiction}
             className="single-filter-element">
               <button
-              onClick={() => filterData( 'fiction', fiction )}
+              onClick={() => filter( 'fiction', fiction )}
               className="single-filterr-button">{ fiction }</button>
             </li>
           ))}

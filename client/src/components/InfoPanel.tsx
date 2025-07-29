@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import './InfoPanel.css'
 import { useMapStore } from '../store/mapStore'
 import type { LocationDescription } from '../types'
+import useFilter from '../hooks/useFilter'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -10,6 +11,7 @@ function InfoPanel() {
   const [isOpen, setOpen] = useState(false)
   const [descriptions, setDescriptions] = useState<LocationDescription[]>([])
   const [loadingDescriptions, setLoadingDescriptions] = useState(false)
+  const filter = useFilter()
   
   const isDraggableRef = useRef(false)
   const xRef = useRef(0)
@@ -132,10 +134,22 @@ function InfoPanel() {
         className="grip"
       />
       <div className="panel-inner">
+        { !currentCharacter && (
+          <p className="no-char">Выберите локацию на карте</p>
+        )}
         {currentCharacter && (
           <div className="character-info">
             <p className="character-name">{currentCharacter.name}</p>
-            <p className="title-author">{currentCharacter.fiction}, {currentCharacter.author}</p>
+            <p className="title-author">
+              <span 
+              className='filter-title'
+              onClick={() => filter('fiction', currentCharacter.fiction)}>
+                {currentCharacter.fiction}</span>,{' '}
+              <span 
+              className='filter-author'
+              onClick={() => filter('author', currentCharacter.author)}>
+                {currentCharacter.author}</span>
+            </p>
             <hr />
             <div className="adress-wrapper">
               <p className='adress'>

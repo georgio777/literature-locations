@@ -60,6 +60,20 @@
   margin: 0;
 }
 
+.filter-title, .filter-author {
+  cursor: pointer;
+  display: inline-block;
+  transition: color .2s;
+}
+
+.filter-title:hover, .filter-author:hover {
+  color: var(--dark-txt);
+}
+
+.filter-title:active, .filter-author:active {
+  transform: scale(0.98);
+}
+
 .adress-wrapper {
   padding: 1.8rem 0;
   display: flex;
@@ -114,6 +128,12 @@
   color: #999;
   font-style: italic;
   margin: 0;
+}
+
+.no-char {
+  font-size: 1.6rem;
+  color: var(--grey-txt);
+  text-align: center;
 }
 
 /* Скрываем на мобильных и планшетах */

@@ -9,6 +9,8 @@
   border-radius: 4px;
   display: flex;
   box-shadow: 2px 2px 1px 1px rgba(34, 60, 80, 0.2);
+
+  height: 29px;
 }
 
 .single-filter-wrapper {
@@ -16,15 +18,23 @@
 }
 
 .filter-header {
-  padding: 4px 6px;
   background-color: white;
   font-size: 1.4rem;
+
+  height: 100%;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
 }
 
 .filter-button, .clear-filter {
-  padding: 4px 6px;
   background-color: white;
   font-size: 1.4rem;
+
+  height: 100%;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
 }
 
 .filter-button {
