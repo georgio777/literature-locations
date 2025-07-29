@@ -120,9 +120,3 @@ Thumbs.db
 # Database
 *.sqlite
 *.db
-
-# Deployment guide (содержит специфичную информацию проекта)
-DEPLOYMENT_GUIDE.md
-
-# Local development guide (содержит специфичную информацию проекта)
-LOCAL_DEVELOPMENT.md
