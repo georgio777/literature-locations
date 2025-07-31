@@ -7,6 +7,7 @@ import LocationsList from "./pages/LocationsList";
 import MapPage from "./pages/MapPage";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminLayout from "./components/AdminLayout";
 import "./App.css";
 
 function App() {
@@ -17,35 +18,42 @@ function App() {
       <Routes>
         {/* Публичные маршруты */}
         <Route path="/" element={<MapPage />} />
-        <Route
-          path="/locations"
-          element={
-            <>
-              <Navigation />
-              <main className="main-content">
-                <LocationsList />
-              </main>
-            </>
-          }
-        />
+
         
         {/* Админские маршруты */}
         <Route
           path="/admin"
           element={
             <ProtectedRoute>
-              <AdminPage />
+              <AdminLayout>
+                <AdminPage />
+              </AdminLayout>
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/locations"
+          element={
+            <>
+              <ProtectedRoute>
+                <Navigation />
+                <main className="main-content">
+                  <LocationsList />
+                </main>
+              </ProtectedRoute>
+            </>
           }
         />
         <Route
           path="/admin/add"
           element={
             <ProtectedRoute>
-              <Navigation />
-              <main className="main-content">
-                <AddLocation />
-              </main>
+              <AdminLayout>
+                <Navigation />
+                <main className="main-content">
+                  <AddLocation />
+                </main>
+              </AdminLayout>
             </ProtectedRoute>
           }
         />
@@ -53,10 +61,12 @@ function App() {
           path="/admin/edit/:id"
           element={
             <ProtectedRoute>
-              <Navigation />
-              <main className="main-content">
-                <EditLocation />
-              </main>
+              <AdminLayout>
+                <Navigation />
+                <main className="main-content">
+                  <EditLocation />
+                </main>
+              </AdminLayout>
             </ProtectedRoute>
           }
         />

@@ -10,6 +10,18 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { isAuthenticated, loading, initialize } = useAuthStore()
 
   useEffect(() => {
+    console.log('ok');
+
+    const preloader: HTMLDivElement | null = document.querySelector('.preloader-wrapper');
+    
+    if (preloader) {
+      preloader.style.display = 'none';
+      console.log(preloader);
+      
+    }
+  }, []);
+
+  useEffect(() => {
     initialize()
   }, [initialize])
 
