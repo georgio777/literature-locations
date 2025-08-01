@@ -3,6 +3,7 @@ import './InfoPanel.css'
 import { useMapStore } from '../store/mapStore'
 import type { LocationDescription } from '../types'
 import useFilter from '../hooks/useFilter'
+import Search from './Search'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -20,7 +21,7 @@ function InfoPanel() {
   const xStartRef = useRef(0)
   
   let screenWidth = window.innerWidth
-  let panelWidth = screenWidth * 0.3
+  let panelWidth = screenWidth * 0.35
   const panelLedge = 0
 
   // Загружаем описания при смене персонажа
@@ -47,7 +48,7 @@ function InfoPanel() {
 
   const handleResize = useCallback(() => {
     screenWidth = window.innerWidth
-    panelWidth = screenWidth * 0.3
+    panelWidth = screenWidth * 0.35
     if (panelRef.current) {
       panelRef.current.style.width = `${panelWidth}px`
       panelRef.current.style.transition = 'none'
@@ -134,6 +135,7 @@ function InfoPanel() {
         className="grip"
       />
       <div className="panel-inner">
+        <Search />
         { !currentCharacter && (
           <p className="no-char">Выберите локацию на карте</p>
         )}
