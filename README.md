@@ -33,7 +33,7 @@
 
 ### 1. Клонирование репозитория
 ```bash
-git clone https://github.com/username/literature-locations.git
+git clone https://github.com/georgio777/literature-locations.git
 cd literature-locations
 ```
 
