@@ -19,7 +19,6 @@ function App() {
         {/* Публичные маршруты */}
         <Route path="/" element={<MapPage />} />
 
-        
         {/* Админские маршруты */}
         <Route
           path="/admin"

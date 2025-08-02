@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Запрет на индексацию админских маршрутов
+Disallow: /admin
+Disallow: /admin/
+Disallow: /locations
+Disallow: /locations/
+
+# Sitemap не требуется для одностраничного приложения
+# При необходимости можно добавить: https://lit-locations.ru/sitemap.xml
+
+# Запрет на индексацию служебных файлов
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.js.map$
+Disallow: /*.css.map$
+
+# Запрет на индексацию временных и системных файлов
+Disallow: /tmp/
+Disallow: /.env
+Disallow: /node_modules/

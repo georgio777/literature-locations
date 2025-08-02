@@ -2,17 +2,32 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <!-- Фавиконы -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Литературные локации" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href="https://lit-locations.ru/" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>Литературные локации Санкт-Петербурга</title>
+    <!-- Preload критичных ресурсов -->
+    <link rel="preload" href="/preloader.css" as="style" />
+    <link rel="preload" href="/logo.svg" as="image" />
     <link rel="stylesheet" href="/preloader.css" />
     <meta
       name="description"
       content="Интерактивная карта литературных мест Петербурга из произведений Достоевского, Гоголя, Пушкина и других классиков. Маршруты, цитаты и исторические справки."
     />
+    <meta
+      name="keywords"
+      content="литературные места, Санкт-Петербург, Достоевский, Пушкин, интерактивная карта, русская классика, литературный туризм, дом раскольникова"
+    />
+    <meta name="theme-color" content="#012030" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,6 +42,39 @@
     />
     <meta property="og:url" content="https://lit-locations.ru/" />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lit-locations.ru/preview.png" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Литературные локации" />
+
+    <!-- Twitter Card теги -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Литературные локации Санкт-Петербурга"
+    />
+    <meta
+      name="twitter:description"
+      content="Интерактивная карта локаций, связанных с героями русской классики"
+    />
+    <meta name="twitter:image" content="https://lit-locations.ru/preview.png" />
+
+    <!-- Структурированные данные -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Литературные локации Санкт-Петербурга",
+        "description": "Интерактивная карта литературных мест Петербурга из произведений Достоевского, Гоголя, Пушкина и других классиков. Маршруты, цитаты и исторические справки.",
+        "url": "https://lit-locations.ru/",
+        "about": {
+          "@type": "Place",
+          "name": "Санкт-Петербург",
+          "description": "Литературные места города"
+        },
+        "keywords": "литературные места, Санкт-Петербург, Достоевский, Пушкин, Гоголь, интерактивная карта, русская классика",
+        "inLanguage": "ru"
+      }
+    </script>
   </head>
   <body>
     <div class="preloader-wrapper">
